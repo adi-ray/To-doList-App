@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/hometoolbar"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bgimgplain"
+    android:orientation="vertical"
+    tools:context=".HomeActivity">
+
+ <androidx.appcompat.widget.Toolbar
+     android:id="@+id/toolbar"
+     android:layout_width="match_parent"
+     android:layout_height="79dp"
+
+     android:background="#D2DDFAF3"
+     android:gravity="center_horizontal">
+
+  <ImageView
+      android:layout_width="72dp"
+      android:padding="4dp"
+      android:layout_height="match_parent"
+      android:layout_gravity="start"
+      android:maxWidth="69dp"
+      android:maxHeight="69dp"
+      android:src="@drawable/man"></ImageView>
+  <TextView
+      android:id="@+id/textView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Your TO_DO list is ready"
+      android:textSize="26dp"
+      android:textStyle="bold"
+      android:layout_marginStart="34dp"
+
+      />
+ </androidx.appcompat.widget.Toolbar>
+
+
+
+ <androidx.coordinatorlayout.widget.CoordinatorLayout
+     android:id="@+id/CoordinatorLayout"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:padding="10dp">
+
+  <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/recyclerview"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent" />
+
+  <com.google.android.material.floatingactionbutton.FloatingActionButton
+      android:id="@+id/floatingActionButton"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="bottom|end"
+      android:layout_margin="30dp"
+      app:srcCompat="@android:drawable/ic_input_add" />
+ </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>
