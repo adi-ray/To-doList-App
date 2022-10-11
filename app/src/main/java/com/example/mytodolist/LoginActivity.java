@@ -1,6 +1,8 @@
   package com.example.mytodolist;
 
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,6 +23,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -32,8 +35,12 @@ import com.google.firebase.auth.FirebaseAuth;
     private TextView loginQues;
     private FirebaseAuth mAuth;
     private ProgressDialog loader;
+
+
+
     private ImageView google;
-      GoogleSignInClient mGoogleSignInClient;
+      GoogleSignInOptions gso;
+      GoogleSignInClient gsc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +61,10 @@ import com.google.firebase.auth.FirebaseAuth;
         mAuth = FirebaseAuth.getInstance();
         google = findViewById(R.id.imageView3);
         loader = new ProgressDialog(this);
+
+
+
+
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,6 +101,12 @@ import com.google.firebase.auth.FirebaseAuth;
             }
 
         });
+
+
+
+
+
+
         loginQues.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,20 +117,51 @@ import com.google.firebase.auth.FirebaseAuth;
         });
 
 
+//        ggogle signup
 
-
-
-        GoogleSignInOptions gso;
-        GoogleSignInClient gsc;
+        gso =  new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        gsc = GoogleSignIn.getClient(this , gso);
         google.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this,googleLogin.class);
-                startActivity(intent);
-
+                SignIn();
             }
         });
+
+
+
     }
+
+      private void SignIn() {
+        Intent intent = gsc.getSignInIntent();
+        startActivityForResult(intent,100);
+
+      }
+
+      @Override
+      protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+          super.onActivityResult(requestCode, resultCode, data);
+          if(requestCode==100){
+              Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+              try {
+                  task.getResult(ApiException.class);
+                  homeActivity();
+              } catch (ApiException e) {
+                  e.printStackTrace();
+                  Toast.makeText(this,"An error occurred",Toast.LENGTH_SHORT).show();
+              }
+
+          }
+      }
+
+      private void homeActivity() {
+        finish();
+        Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
+        startActivity(intent);
+      }
+
       @Override
       public void onBackPressed() {
 

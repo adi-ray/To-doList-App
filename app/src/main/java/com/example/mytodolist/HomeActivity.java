@@ -1,21 +1,32 @@
 package com.example.mytodolist;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +35,7 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -49,10 +61,26 @@ private String uptask;
 private String updes;
 private String updue;
 
+ActionBarDrawerToggle actionBarDrawerToggle;
+DrawerLayout drawerLayout;
+NavigationView navigationView;
+
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+
+
+
+
+
+
+
         recyclerview = findViewById(R.id.recyclerview);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
          linearLayoutManager.setReverseLayout(true);
@@ -64,6 +92,7 @@ private String updue;
          mUser = mAuth.getCurrentUser();
          onlineUserId = mUser.getUid();
          reference = FirebaseDatabase.getInstance().getReference().child("task").child(onlineUserId);
+
 
 
 
@@ -110,6 +139,9 @@ private String updue;
         Button cancel = myView.findViewById(R.id.CancelUpdate);
         Button confirm = myView.findViewById(R.id.ConfirmUpdate);
         final EditText taskfinal = myView.findViewById(R.id.Task);
+
+
+
         final EditText descriptionfinal = myView.findViewById(R.id.Description);
         final EditText duedate = myView.findViewById(R.id.editTextDate2);
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -118,6 +150,12 @@ private String updue;
                 dialog.dismiss();
             }
         });
+
+
+
+
+
+
 
         confirm.setOnClickListener(new View.OnClickListener() {
 
